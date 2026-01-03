@@ -3,6 +3,7 @@ services:
     build: ./server
     ports:
     - 3000:3000
+    
 
   react:
     build: ./client
@@ -10,7 +11,7 @@ services:
     - 5173:5173
 
   db:
-    image: postgres
+    image: postgres:15
     restart: always
     shm_size: 128mb
     environment:
@@ -18,7 +19,8 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - db-data:/data
+      - pgdata:/var/lib/postgresql/data
+    
   nginx:
     image: nginx
     volumes:
@@ -26,4 +28,4 @@ services:
     ports:
      - 80:80
 volumes:
-  db-data:
+  pgdata:
