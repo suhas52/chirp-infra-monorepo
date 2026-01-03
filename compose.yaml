@@ -1,0 +1,29 @@
+services:
+  api:
+    build: ./server
+    ports:
+    - 3000:3000
+
+  react:
+    build: ./client
+    ports:
+    - 5173:5173
+
+  db:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: temp
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/data
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+     - 80:80
+volumes:
+  db-data:
